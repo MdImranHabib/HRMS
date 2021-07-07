@@ -14,6 +14,7 @@ namespace HRMS.Data
         {
         }
         public DbSet<HRMS.Models.Flat> Flats { get; set; }
+        public DbSet<HRMS.Models.Resident> Residents { get; set; }
        
     }
 }

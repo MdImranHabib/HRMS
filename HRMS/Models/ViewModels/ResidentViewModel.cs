@@ -9,7 +9,7 @@ namespace HRMS.Models.ViewModels
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Resident Name")]
+        [Display(Name = "Resident's Name")]
         public string Name { get; set; }
 
         [EmailAddress]
@@ -29,6 +29,7 @@ namespace HRMS.Models.ViewModels
         [Display(Name = "NID No.")]
         public string NIDNo { get; set; }
 
+        [Display(Name = "Resident's Photo")]
         public IFormFile Photo { get; set; }
 
         [Required]

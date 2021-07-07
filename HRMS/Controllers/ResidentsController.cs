@@ -1,7 +1,13 @@
 ﻿using HRMS.Data;
+using HRMS.Models;
+using HRMS.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HRMS.Controllers
@@ -9,10 +15,12 @@ namespace HRMS.Controllers
     public class ResidentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ResidentsController(ApplicationDbContext context)
+        public ResidentsController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -21,79 +29,151 @@ namespace HRMS.Controllers
             return View(residents);
         }
 
-        // GET: Residents/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var resident = await _context.Residents
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            return View(resident);
+        }
+
+        #region Create Resident
+
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: Residents/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Residents/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(ResidentViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
+                string uniqueFileName = "";
+                if (model.Photo != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "uploadedImages");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
 
+                Resident resident = new Resident()
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    ContactNo = model.ContactNo,
+                    NIDNo = model.NIDNo,
+                    PhotoPath = uniqueFileName,
+                    Occupation = model.Occupation,
+                    PrevAddress = model.PrevAddress,
+                    OpeningBalance = model.OpeningBalance
+                };
+
+                _context.Add(resident);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
 
-        // GET: Residents/Edit/5
-        public ActionResult Edit(int id)
+        #endregion
+
+        #region Edit Resident
+
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var resident = await _context.Residents.FindAsync(id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+            return View(resident);
         }
 
-        // POST: Residents/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,ContactNo,NIDNo,PhotoPath,Occupation,PrevAddress,OpeningBalance")] Resident resident)
         {
-            try
+            if (id != resident.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(resident);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ResidentExists(resident.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(resident);
         }
 
-        // GET: Residents/Delete/5
-        public ActionResult Delete(int id)
+        #endregion
+
+        #region Delete Resident
+
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var resident = await _context.Residents
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (resident == null)
+            {
+                return NotFound();
+            }
+
+            return View(resident);
         }
 
-        // POST: Residents/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var resident = await _context.Residents.FindAsync(id);
+            _context.Residents.Remove(resident);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        #endregion
+
+        private bool ResidentExists(int id)
+        {
+            return _context.Residents.Any(e => e.Id == id);
         }
     }
 }

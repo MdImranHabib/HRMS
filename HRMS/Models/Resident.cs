@@ -8,7 +8,7 @@ namespace HRMS.Models
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Resident Name")]
+        [Display(Name = "Resident's Name")]
         public string Name { get; set; }
 
         [EmailAddress]
@@ -28,6 +28,7 @@ namespace HRMS.Models
         [Display(Name ="NID No.")]
         public string NIDNo { get; set; }
 
+        [Display(Name ="Resident's Photo")]
         public string PhotoPath { get; set; }
 
         [Required]

@@ -1,0 +1,62 @@
+﻿@model HRMS.Models.Flat
+
+@{
+    ViewData["Title"] = "Flat Edit";
+}
+
+<h2>Edit Flat Info</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rent" class="control-label"></label>
+                <input asp-for="Rent" class="form-control" />
+                <span asp-validation-for="Rent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MeterNo" class="control-label"></label>
+                <input asp-for="MeterNo" class="form-control" />
+                <span asp-validation-for="MeterNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">             
+                <label asp-for="Status" class="control-label"></label>
+                <div class="radio">
+                    <label class="radio-inline">
+                        <input type="radio" asp-for="Status" value="false">Free
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" asp-for="Status" value="true">Allocated
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-warning" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

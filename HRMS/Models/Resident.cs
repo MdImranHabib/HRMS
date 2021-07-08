@@ -14,6 +14,8 @@ namespace HRMS.Models
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
         [StringLength(100)]
+        //[Remote("IsEmailExist", "Residents", ErrorMessage = "This email is already in use. Please try another.")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
         public string Email { get; set; }
 
         [Required]

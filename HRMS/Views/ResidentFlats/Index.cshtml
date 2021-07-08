@@ -1,0 +1,69 @@
+﻿@model IEnumerable<HRMS.Models.ResidentFlat>
+
+@{
+    ViewData["Title"] = "Flat Assign Index";
+}
+
+<h2>Flat Assign List</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Assign Flat</a>
+</p>
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Resident)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resident.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Flat.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDate)
+            </td>
+            @if (item.Status == true)
+            {
+                <td>
+                    <span class="label label-success">Active</span>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <span class="label label-danger">Deactive</span>
+                </td>
+            }
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">Details</a>
+                @*<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Delete</a>*@
+                <a asp-action="Remove" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Remove Flat</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿@model HRMS.Models.ResidentFlat
+
+@{
+    ViewData["Title"] = "Assign Flat";
+}
+
+<h2>Assign Flat</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ResidentId" class="control-label"></label>
+                <select asp-for="ResidentId" class="form-control">
+                    <option value="">---Select Resident---</option>
+                    @foreach (var item in ViewBag.Residents)
+                    {
+                        <option value="@item.Id">@item.Name - @item.ContactNo</option>
+                    }
+                </select>
+                <span asp-validation-for="ResidentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlatId" class="control-label"></label>
+                <select asp-for="FlatId" class="form-control">
+                    <option value="">---Select Flat---</option>
+                    @foreach (var item in ViewBag.Flats)
+                    {
+                        <option value="@item.Id">@item.Name - @item.Category</option>
+                    }
+                </select>
+                <span asp-validation-for="FlatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArrivalDate" class="control-label"></label>
+                <input asp-for="ArrivalDate" class="form-control" />
+                <span asp-validation-for="ArrivalDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartureDate" class="control-label"></label>
+                <input asp-for="DepartureDate" class="form-control" />
+                <span asp-validation-for="DepartureDate" class="text-danger"></span>
+            </div>          
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

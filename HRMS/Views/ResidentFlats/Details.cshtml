@@ -44,22 +44,7 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DepartureDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        @if (Model.Status == true)
-        {
-            <dd>
-                <span class="label label-success">Active</span>
-            </dd>
-        }
-        else
-        {
-            <dd>
-                <span class="label label-danger">Deactive</span>
-            </dd>
-        }
+        </dd>        
     </dl>
 </div>
 <div>

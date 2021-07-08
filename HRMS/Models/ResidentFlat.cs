@@ -24,8 +24,6 @@ namespace HRMS.Models
         [Display(Name = "Departure Date")]
         public DateTime? DepartureDate { get; set; }
 
-        public bool Status { get; set; }
-
         public virtual Resident Resident { get; set; }
         public virtual Flat Flat { get; set; }
     }

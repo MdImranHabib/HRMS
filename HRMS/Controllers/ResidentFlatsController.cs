@@ -61,9 +61,13 @@ namespace HRMS.Controllers
         public async Task<IActionResult> Create([Bind("Id,ResidentId,FlatId,ArrivalDate,DepartureDate")] ResidentFlat residentFlat)
         {
             if (ModelState.IsValid)
-            {
-                residentFlat.Status = true;
+            {   
                 _context.Add(residentFlat);
+
+                var flat = await _context.Flats.FindAsync(residentFlat.FlatId);
+                flat.Status = true;
+                _context.Update(flat);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -95,7 +99,7 @@ namespace HRMS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ResidentId,FlatId,ArrivalDate,DepartureDate,Status")] ResidentFlat residentFlat)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ResidentId,FlatId,ArrivalDate,DepartureDate")] ResidentFlat residentFlat)
         {
             if (id != residentFlat.Id)
             {
@@ -154,27 +158,19 @@ namespace HRMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var residentFlat = await _context.ResidentFlats.FindAsync(id);
+            var residentFlat = await _context.ResidentFlats.FindAsync(id);          
+
+            var flat = await _context.Flats.FindAsync(residentFlat.FlatId);
+            flat.Status = false;
+            _context.Update(flat);
+
             _context.ResidentFlats.Remove(residentFlat);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        #endregion
-
-        #region Remove Flat
-        
-        public async Task<IActionResult> Remove(int id)
-        {
-            var residentFlat = await _context.ResidentFlats.FindAsync(id);
-            residentFlat.Status = false;
-
-            _context.Update(residentFlat);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        #endregion
+        #endregion        
 
         private bool ResidentFlatExists(int id)
         {

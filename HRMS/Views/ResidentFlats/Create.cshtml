@@ -28,7 +28,7 @@
                     <option value="">---Select Flat---</option>
                     @foreach (var item in ViewBag.Flats)
                     {
-                        <option value="@item.Id">@item.Name - @item.Category</option>
+                        <option value="@item.Id">@item.Name -- @item.Category</option>
                     }
                 </select>
                 <span asp-validation-for="FlatId" class="text-danger"></span>

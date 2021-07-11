@@ -32,20 +32,7 @@ namespace HRMS.Controllers
             months.Add("September-" + currentYear, "September-" + currentYear);
             months.Add("October-" + currentYear, "October-" + currentYear);
             months.Add("November-" + currentYear, "November-" + currentYear);
-            months.Add("December-" + currentYear, "December-" + currentYear);
-
-            //months.Add("January", "January");
-            //months.Add("February", "February");
-            //months.Add("March", "March");
-            //months.Add("April", "April");
-            //months.Add("May", "May");
-            //months.Add("June", "June");
-            //months.Add("July", "July");
-            //months.Add("August", "August");
-            //months.Add("September", "September");
-            //months.Add("October", "October");
-            //months.Add("November", "November");
-            //months.Add("December", "December");
+            months.Add("December-" + currentYear, "December-" + currentYear);            
         }
        
         public async Task<IActionResult> Index()
@@ -68,6 +55,12 @@ namespace HRMS.Controllers
             {
                 return NotFound();
             }
+
+            var residentInfo = _context.ResidentFlats            
+                .Include(rf => rf.Resident)
+                .FirstOrDefault(rf => rf.FlatId == rent.FlatId);
+
+            ViewBag.ResidentInfo = residentInfo;
 
             return View(rent);
         }
@@ -121,7 +114,8 @@ namespace HRMS.Controllers
 
         #endregion
 
-        // GET: Rents/Edit/5
+        #region Edit Rent
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -137,10 +131,7 @@ namespace HRMS.Controllers
             ViewData["FlatId"] = new SelectList(_context.Flats, "Id", "Category", rent.FlatId);
             return View(rent);
         }
-
-        // POST: Rents/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+   
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FlatId,RentMonth,FlatRent,ElectricBill,GasBill,WaterBill,TotalBill,Paid,Date,Remarks")] Rent rent)
@@ -174,7 +165,10 @@ namespace HRMS.Controllers
             return View(rent);
         }
 
-        // GET: Rents/Delete/5
+        #endregion
+
+        #region Delete Rent
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -190,10 +184,15 @@ namespace HRMS.Controllers
                 return NotFound();
             }
 
+            var residentInfo = _context.ResidentFlats
+                .Include(rf => rf.Resident)
+                .FirstOrDefault(rf => rf.FlatId == rent.FlatId);
+
+            ViewBag.ResidentInfo = residentInfo;
+
             return View(rent);
         }
-
-        // POST: Rents/Delete/5
+        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -203,6 +202,8 @@ namespace HRMS.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
 
         private bool RentExists(int id)
         {

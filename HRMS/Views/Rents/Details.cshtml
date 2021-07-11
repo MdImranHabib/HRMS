@@ -1,20 +1,31 @@
 ﻿@model HRMS.Models.Rent
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Rent Details";
 }
 
-<h2>Details</h2>
+<h2>Rent Details</h2>
+<hr />
 
-<div>
-    <h4>Rent</h4>
-    <hr />
+<div>   
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.RentMonth)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.RentMonth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Flat)
+        </dt>
+        <dd>
+            <em class="text-primary">Name: </em>@Model.Flat.Name; <em class="text-primary">Category: </em>@Model.Flat.Category; <em class="text-primary">Meter No: </em>@Model.Flat.MeterNo
+        </dd>
+        <dt>
+            Resident
+        </dt>
+        <dd>
+            <em class="text-primary">Name: </em>@ViewBag.ResidentInfo.Resident.Name; <em class="text-primary">Contact No: </em>@ViewBag.ResidentInfo.Resident.ContactNo
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.FlatRent)
@@ -53,6 +64,12 @@
             @Html.DisplayFor(model => model.Paid)
         </dd>
         <dt>
+            Due
+        </dt>
+        <dd>
+            @(Model.TotalBill - Model.Paid)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Date)
         </dt>
         <dd>
@@ -64,15 +81,9 @@
         <dd>
             @Html.DisplayFor(model => model.Remarks)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Flat)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Flat.Category)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>

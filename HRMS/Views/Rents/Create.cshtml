@@ -189,8 +189,10 @@
             $("#RentMonth").change(function () {
                 $("#btnSubmit").prop("disabled", false);
                 
+                var id = $("#FlatId").val();
                 var strArrivalDate = $("#arrivalDate").val();
-                var strRentDate = new Date($("#RentMonth").val()).toLocaleDateString();
+                var rentMonth = $("#RentMonth").val();
+                var strRentDate = new Date(rentMonth).toLocaleDateString();
                 
                 if (strArrivalDate != "") {
                     if (strRentDate != "Invalid Date") {
@@ -200,6 +202,23 @@
                         if (rentDate < arrivalDate) {
                             alert("Invalid Month");
                             $("#btnSubmit").prop("disabled", true);
+                        }
+                        else {
+                            $.ajax({
+                                type: 'POST',
+                                url: "/Rents/IsMonthExist/" + id,
+                                data: { month: rentMonth },
+                                async: false,
+                                success: function (data) {
+                                    if (data == true) {
+                                        alert("The rent of this month is already paid.");
+                                        $("#btnSubmit").prop("disabled", true);
+                                    }                                    
+                                },
+                                error: function () {
+                                    alert("Error");
+                                }
+                            });
                         }
                     }
                 }                                

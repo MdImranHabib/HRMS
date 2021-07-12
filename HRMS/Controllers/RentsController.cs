@@ -112,6 +112,13 @@ namespace HRMS.Controllers
             return Json(rentInfo);
         }
 
+        public JsonResult IsMonthExist(int id, string month)
+        {
+            var rentInfo = _context.Rents.Any(rf => rf.FlatId == id && rf.RentMonth == month);           
+            
+            return Json(rentInfo);
+        }
+
         #endregion
 
         #region Edit Rent
@@ -128,7 +135,7 @@ namespace HRMS.Controllers
             {
                 return NotFound();
             }
-            ViewData["FlatId"] = new SelectList(_context.Flats, "Id", "Category", rent.FlatId);
+            ViewData["FlatId"] = new SelectList(_context.Flats, "Id", "Name", rent.FlatId);            
             return View(rent);
         }
    
@@ -209,5 +216,14 @@ namespace HRMS.Controllers
         {
             return _context.Rents.Any(e => e.Id == id);
         }
+
+        #region Rent Receipt
+
+        public IActionResult Receipt(int? id)
+        {
+            return View();
+        }
+
+        #endregion
     }
 }

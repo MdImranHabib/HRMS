@@ -7,18 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HRMS.Data;
 using HRMS.Models;
+using Microsoft.AspNetCore.Hosting;
+using AspNetCore.Reporting;
+using System.IO;
 
 namespace HRMS.Controllers
 {
     public class RentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         Dictionary<string, string> months = new Dictionary<string, string>();
 
-        public RentsController(ApplicationDbContext context)
+        public RentsController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
 
             var currentYear = DateTime.Now.Year;
             months.Add("January-" + currentYear, "January-" + currentYear);
@@ -221,7 +226,47 @@ namespace HRMS.Controllers
 
         public IActionResult Receipt(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rent = _context.Rents
+                .Include(r => r.Flat)
+                .FirstOrDefault(m => m.Id == id);
+            if (rent == null)
+            {
+                return NotFound();
+            }
+
+            var resident = _context.ResidentFlats
+                .Include(rf => rf.Resident)
+                .FirstOrDefault(rf => rf.FlatId == rent.FlatId);
+
+            string mimtype = "";
+            int extension = 1;
+            var path = Path.Combine(_hostingEnvironment.ContentRootPath, "Reports", "RentReceipt.rdlc");
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("FlatName", rent.Flat.Name);
+            parameters.Add("FlatCategory", rent.Flat.Category);
+            parameters.Add("MeterNo", rent.Flat.MeterNo);
+            parameters.Add("ResidentName", resident.Resident.Name);
+            parameters.Add("ResidentContact", resident.Resident.ContactNo);
+            parameters.Add("ResidentNID", resident.Resident.NIDNo);
+            parameters.Add("RentMonth", rent.RentMonth);
+            parameters.Add("BillingDate", rent.Date.ToString("dd-MMM-yyyy hh:mm"));
+            parameters.Add("FlatRent", rent.FlatRent.ToString());
+            parameters.Add("ElectricBill", rent.ElectricBill.ToString());
+            parameters.Add("GasBill", rent.GasBill.ToString());
+            parameters.Add("WaterBill", rent.WaterBill.ToString());
+            parameters.Add("TotalBill", rent.TotalBill.ToString());
+            parameters.Add("Paid", rent.Paid.ToString());
+            parameters.Add("Due", (rent.TotalBill - rent.Paid).ToString());
+            parameters.Add("Remarks", rent.Remarks);
+
+            LocalReport localReport = new LocalReport(path);
+            var result = localReport.Execute(RenderType.Pdf, extension, parameters, mimtype);
+            return File(result.MainStream, "application/pdf");
         }
 
         #endregion

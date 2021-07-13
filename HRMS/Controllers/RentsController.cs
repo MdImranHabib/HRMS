@@ -245,7 +245,7 @@ namespace HRMS.Controllers
 
             string mimtype = "";
             int extension = 1;
-            var path = Path.Combine(_hostingEnvironment.ContentRootPath, "Reports", "RentReceipt.rdlc");
+            var path = Path.Combine(_hostingEnvironment.WebRootPath, "Reports", "RentReceipt.rdlc");
             Dictionary<string, string> parameters = new Dictionary<string, string>();
             parameters.Add("FlatName", rent.Flat.Name);
             parameters.Add("FlatCategory", rent.Flat.Category);
@@ -254,7 +254,7 @@ namespace HRMS.Controllers
             parameters.Add("ResidentContact", resident.Resident.ContactNo);
             parameters.Add("ResidentNID", resident.Resident.NIDNo);
             parameters.Add("RentMonth", rent.RentMonth);
-            parameters.Add("BillingDate", rent.Date.ToString("dd-MMM-yyyy hh:mm"));
+            parameters.Add("BillingDate", rent.Date.ToString("dd-MMM-yyyy hh:mm tt"));
             parameters.Add("FlatRent", rent.FlatRent.ToString());
             parameters.Add("ElectricBill", rent.ElectricBill.ToString());
             parameters.Add("GasBill", rent.GasBill.ToString());

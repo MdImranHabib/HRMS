@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HRMS</title>
 
-    <environment include="Development">
+
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    @*<environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
@@ -14,7 +18,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    </environment>*@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -31,10 +35,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Flats" asp-action="Index">Flat List</a></li>                    
-                    <li><a asp-area="" asp-controller="Residents" asp-action="Index">Resident List</a></li>                    
-                    <li><a asp-area="" asp-controller="ResidentFlats" asp-action="Index">Flat Assign List</a></li>                    
-                    <li><a asp-area="" asp-controller="Rents" asp-action="Index">Rent List</a></li>                    
+                    <li><a asp-area="" asp-controller="Flats" asp-action="Index">Flat List</a></li>
+                    <li><a asp-area="" asp-controller="Residents" asp-action="Index">Resident List</a></li>
+                    <li><a asp-area="" asp-controller="ResidentFlats" asp-action="Index">Flat Assign List</a></li>
+                    <li><a asp-area="" asp-controller="Rents" asp-action="Index">Rent List</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
@@ -51,7 +55,11 @@
         </footer>
     </div>
 
-    <environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js"asp-append-version="true"></script>
+
+    @*<environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -70,7 +78,7 @@
                 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    </environment>*@
 
     @RenderSection("Scripts", required: false)
 </body>

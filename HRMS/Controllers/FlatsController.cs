@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HRMS.Data;
 using HRMS.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRMS.Controllers
 {
+    [Authorize]
     public class FlatsController : Controller
     {
         private readonly ApplicationDbContext _context;

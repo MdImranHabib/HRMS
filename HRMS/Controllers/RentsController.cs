@@ -10,9 +10,11 @@ using HRMS.Models;
 using Microsoft.AspNetCore.Hosting;
 using AspNetCore.Reporting;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRMS.Controllers
 {
+    [Authorize]
     public class RentsController : Controller
     {
         private readonly ApplicationDbContext _context;

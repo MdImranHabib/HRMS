@@ -1,6 +1,7 @@
 ﻿using HRMS.Data;
 using HRMS.Models;
 using HRMS.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace HRMS.Controllers
 {
+    [Authorize]
     public class ResidentsController : Controller
     {
         private readonly ApplicationDbContext _context;

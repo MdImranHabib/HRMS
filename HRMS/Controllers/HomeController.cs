@@ -8,14 +8,15 @@ namespace HRMS.Controllers
     {
         public IActionResult Index()
         {
-            return View();            
+            //return View();
+            return Redirect("~/Identity/Account/Login");
         }
 
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View();          
         }
 
         public IActionResult Contact()

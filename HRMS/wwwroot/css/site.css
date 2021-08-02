@@ -12,6 +12,7 @@ body {
     padding-right: 15px;
     background-color: rgb(0 0 0 / 7%);
     border: 1px solid black;
+    z-index:1;
 }
 
 /* Carousel */
@@ -50,3 +51,10 @@ legend{
     border:0px;
     margin:0px;
 }
+
+/*.bg {
+    background: url('../images/images.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}*/

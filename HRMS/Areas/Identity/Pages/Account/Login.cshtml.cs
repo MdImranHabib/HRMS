@@ -78,7 +78,7 @@ namespace HRMS.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     //return LocalRedirect(returnUrl);
-                    return RedirectToAction("About");
+                    return RedirectToAction("Dashboard", "Home");
                 }
                 if (result.RequiresTwoFactor)
                 {

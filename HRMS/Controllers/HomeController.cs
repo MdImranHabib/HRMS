@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HRMS.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace HRMS.Controllers
 {
@@ -35,6 +37,12 @@ namespace HRMS.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //[Authorize]
+        public IActionResult Dashboard()
+        {      
+            return View();
         }
     }
 }

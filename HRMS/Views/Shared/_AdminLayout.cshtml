@@ -1,0 +1,434 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - SMSSolution</title> @*it will be dynamic for site whitelisted*@
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Adminlayout/plugins/toaster/css/toastr.css" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGIN STYLES -->
+    <link href="~/Adminlayout/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/plugins/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGIN STYLES -->
+    <!-- BEGIN PAGE STYLES -->
+    <link href="~/Adminlayout/css/tasks.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE STYLES -->
+    <!-- BEGIN THEME STYLES -->
+    <link href="~/Adminlayout/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/css/darkblue.css" id="style_color" rel="stylesheet" type="text/css" />
+    <link href="~/Adminlayout/css/custom.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME STYLES -->
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+          integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />    
+
+    <link rel="shortcut icon" href="~/favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">               
+                <a asp-action="Dashboard" asp-controller="Home" class="navbar-brand">
+                    HRMS
+                    @*<img src="#" alt="logo" class="logo-default" />*@
+                </a>
+                <div class="menu-toggler sidebar-toggler hide">
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    @*@{
+                            var empPhotoPath = "~/images/" + (ViewBag.Emp.PhotoPath ?? "Avatar.jpg");
+                        }*@
+                    <li class="dropdown dropdown-dark dropdown-user">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img class="img-circle" src="~/images/Avatar.jpg" alt="img" asp-append-version="true" />
+                            <span class="username username-hide-on-mobile">
+                                @*@ViewBag.Emp.Name*@
+                                @*@UserManager.GetUserName(User)*@
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a asp-action="ClientProfile" asp-controller="Clients">
+                                    <i class="icon-user"></i> My Profile
+                                </a>
+                            </li>
+
+                            <li class="divider"></li>
+
+                            <li>
+                                <form asp-action="Logout" asp-controller="Account" method="post">
+                                    <button type="submit" class="btn btn-danger btn-block"><i class="icon-logout"></i> Log Out</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <div class="clearfix">
+    </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="false" data-slide-speed="200">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler">
+                        </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    <br />
+                    @*@if (signInManager.IsSignedIn(User))
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            //class="start active open"
+                            <li>
+                                <a asp-action="Dashboard" asp-controller="Home">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Dashboard</span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-envelope-open"></i>
+                                    <span class="title">Messaging</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="SendSMS" asp-controller="Messages">
+                                            <i class="icon-paper-plane"></i>
+                                            Send Message
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a asp-action="ShowClientList" asp-controller="Clients">
+                                    <i class="icon-users"></i>
+                                    <span class="title">Clients</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="ShowUserPricings" asp-controller="Pricings">
+                                    <i class="icon-credit-card"></i>
+                                    <span class="title">Price & Coverage</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-notebook"></i>
+                                    <span class="title">Phonebook</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="ShowGroups" asp-controller="Groups">
+                                            <i class="icon-list"></i>
+                                            Groups
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="ShowContacts" asp-controller="Contacts">
+                                            <i class="icon-list"></i>
+                                            Contacts
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Reports</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="TransactionsReport" asp-controller="Reports">
+                                            <i class="icon-docs"></i>
+                                            Transactions
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="heading">
+                                <h3 class="uppercase">More</h3>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-settings"></i>
+                                    <span class="title">Settings</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="ShowAPIList" asp-controller="APIs">
+                                            <i class="icon-list"></i>
+                                            API List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="ShowsenderList" asp-controller="Senders">
+                                            <i class="icon-list"></i>
+                                            Sender List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="ShowSenderAssignList" asp-controller="ClientSenders">
+                                            <i class="icon-list"></i>
+                                            Sender Assign List
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else if (User.IsInRole("Master Reseller"))
+                        {
+                            //class="start active open"
+                            <li>
+                                <a asp-action="Dashboard" asp-controller="Home">
+                                    <i class="icon-home"></i>
+                                    <span class="title">Dashboard</span>
+                                    <span class="selected"></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-envelope-open"></i>
+                                    <span class="title">Messaging</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="SendSMS" asp-controller="Messages">
+                                            <i class="icon-paper-plane"></i>
+                                            Send Message
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a asp-action="ShowClientList" asp-controller="Clients">
+                                    <i class="icon-users"></i>
+                                    <span class="title">Clients</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="ShowUserPricings" asp-controller="Pricings">
+                                    <i class="icon-credit-card"></i>
+                                    <span class="title">Price & Coverage</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-notebook"></i>
+                                    <span class="title">Phonebook</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="ShowGroups" asp-controller="Groups">
+                                            <i class="icon-list"></i>
+                                            Groups
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="ShowContacts" asp-controller="Contacts">
+                                            <i class="icon-list"></i>
+                                            Contacts
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">Reports</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="TransactionsReport" asp-controller="Reports">
+                                            <i class="icon-docs"></i>
+                                            Transactions
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="heading">
+                                <h3 class="uppercase">More</h3>
+                            </li>
+
+                            <li>
+                                <a href="javascript:;">
+                                    <i class="icon-settings"></i>
+                                    <span class="title">Settings</span>
+                                    <span class="arrow "></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a asp-action="ShowSenderAssignList" asp-controller="ClientSenders">
+                                            <i class="icon-list"></i>
+                                            Sender Assign List
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+
+                    }*@
+
+                    <li>
+                        <a asp-action="Dashboard" asp-controller="Home">
+                            <i class="icon-home"></i>
+                            <span class="title">Dashboard</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END SIDEBAR MENU -->
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">    
+        <div class="page-footer-inner">
+            2021 &copy; HRMS.
+        </div>
+        <div class="scroll-to-top">
+            <i class="icon-arrow-up"></i>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/global/plugins/respond.min.js"></script>
+    <script src="../../assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+
+    <script src="~/Adminlayout/js/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery-migrate.min.js" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="~/Adminlayout/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/js/validator.min.js"></script>
+    <script src="~/Adminlayout/plugins/toaster/js/toastr.js"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Adminlayout/plugins/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery.pulsate.min.js" type="text/javascript"></script>>
+    <script src="~/Adminlayout/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <!-- IMPORTANT! fullcalendar depends on jquery-ui.min.js for drag & drop support -->
+    <script src="~/Adminlayout/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery.easypiechart.min.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/jquery.sparkline.min.js" type="text/javascript"></script>
+    <script src="~/js/jquery.textareaCounter.plugin.js"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/Adminlayout/js/metronic.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/layout.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/quick-sidebar.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/demo.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/index.js" type="text/javascript"></script>
+    <script src="~/Adminlayout/js/tasks.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core componets
+            Layout.init(); // init layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+            Index.init();
+            Index.initDashboardDaterange();
+            //Index.initJQVMAP(); // init index page's custom scripts
+            Index.initCalendar(); // init index page's custom scripts
+            Index.initCharts(); // init index page's custom scripts
+            Index.initChat();
+            Index.initMiniCharts();
+            Tasks.initDashboardWidget();
+        });
+    </script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+            integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

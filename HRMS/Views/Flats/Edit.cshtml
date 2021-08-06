@@ -2,58 +2,85 @@
 
 @{
     ViewData["Title"] = "Flat Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit Flat Info</h2>
-<hr />
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rent" class="control-label"></label>
-                <input asp-for="Rent" class="form-control" />
-                <span asp-validation-for="Rent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeterNo" class="control-label"></label>
-                <input asp-for="MeterNo" class="form-control" />
-                <span asp-validation-for="MeterNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">             
-                <label asp-for="Status" class="control-label"></label>
-                <div class="radio">
-                    <label class="radio-inline">
-                        <input type="radio" asp-for="Status" value="false">Free
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" asp-for="Status" value="true">Allocated
-                    </label>
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">
+        Edit Flat <small class="text-lowercase">Edit Flat</small>
+    </h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a asp-action="Index" asp-controller="Flats">Flat List</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a asp-action="Edit" asp-controller="Flats" asp-route-id="@Model.Id">Edit Flat</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label bold"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Category" class="control-label bold"></label>
+                                <input asp-for="Category" class="form-control" />
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label bold"></label>
+                                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rent" class="control-label bold"></label>
+                                <input asp-for="Rent" class="form-control" />
+                                <span asp-validation-for="Rent" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MeterNo" class="control-label bold"></label>
+                                <input asp-for="MeterNo" class="form-control" />
+                                <span asp-validation-for="MeterNo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label bold"></label>
+                                <div class="radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" asp-for="Status" value="false">Free
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" asp-for="Status" value="true">Allocated
+                                    </label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <input type="submit" value="Update" class="btn btn-warning btn-block" />                               
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-warning" />
-                <a asp-action="Index" class="btn btn-primary">Back to List</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

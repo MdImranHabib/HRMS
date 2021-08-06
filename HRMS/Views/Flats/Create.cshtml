@@ -2,45 +2,68 @@
 
 @{
     ViewData["Title"] = "Flat Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Add New Flat</h2>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">
+        Add Flat <small class="text-lowercase">Add Flat</small>
+    </h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>           
+                <a asp-action="Create" asp-controller="Flats">Add Flat</a>             
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label bold"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Category" class="control-label bold"></label>
+                                <input asp-for="Category" class="form-control" />
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label bold"></label>
+                                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rent" class="control-label bold"></label>
+                                <input asp-for="Rent" class="form-control" />
+                                <span asp-validation-for="Rent" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MeterNo" class="control-label bold"></label>
+                                <input asp-for="MeterNo" class="form-control" />
+                                <span asp-validation-for="MeterNo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-success btn-block" />                              
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rent" class="control-label"></label>
-                <input asp-for="Rent" class="form-control" />
-                <span asp-validation-for="Rent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MeterNo" class="control-label"></label>
-                <input asp-for="MeterNo" class="form-control" />
-                <span asp-validation-for="MeterNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-primary">Back to List</a>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

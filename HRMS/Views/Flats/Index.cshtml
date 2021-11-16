@@ -78,9 +78,15 @@
                                     </td>
                                 }
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">Edit</a>
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">Details</a>
-                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">
+                                        <i class="fa fa-info-circle"></i> Details
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </a>
                                 </td>
                             </tr>
                         }

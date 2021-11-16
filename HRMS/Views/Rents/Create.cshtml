@@ -2,133 +2,161 @@
 
 @{
     ViewData["Title"] = "Rent Receive";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h4 class="alert bg-primary text-center">Rent Receive</h4>
-<hr />
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">
+        Generate Rent <small class="text-lowercase">Generate Rent</small>
+    </h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a asp-action="Create" asp-controller="Rents">Generate Rent</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <h4 class="alert bg-primary text-center">Rent Receive</h4>
+                <hr />
 
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <div class="row">                 
-                    <div class="col-md-4 col-md-offset-4">
-                        <select asp-for="FlatId" class="form-control">
-                            <option value="">---Select Flat---</option>
-                            @foreach (var flat in ViewBag.Flats)
-                            {
-                                <option value="@flat.Id">@flat.Name - @flat.Category</option>
-                            }
-                        </select>
-                        <span asp-validation-for="FlatId" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <select asp-for="FlatId" class="form-control">
+                                            <option value="">---Select Flat---</option>
+                                            @foreach (var flat in ViewBag.Flats)
+                                            {
+                                                <option value="@flat.Id">@flat.Name - @flat.Category</option>
+                                            }
+                                        </select>
+                                        <span asp-validation-for="FlatId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset>
+                                <legend class="text-center">Flat Info</legend>
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Meter No.</label>
+                                        <input id="meterNo" disabled class="form-control" style="background-color:deepskyblue" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Resident's Name</label>
+                                        <input id="residentName" disabled class="form-control" style="background-color:deepskyblue" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Resident's Contact No</label>
+                                        <input id="residentContact" disabled class="form-control" style="background-color:deepskyblue" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Resident's Arrival Date</label>
+                                        <input id="arrivalDate" disabled class="form-control" style="background-color:deepskyblue" />
+                                    </div>
+                                    <div class="form-group col-md-3 hidden">
+                                        <label class="control-label">Resident's Opening Balance</label>
+                                        <input id="openingBalance" disabled class="form-control" />
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <br />
+                            <fieldset>
+                                <legend class="text-center">Rent Info</legend>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="RentMonth" class="control-label"></label>
+                                            <select asp-for="RentMonth" class="form-control">
+                                                <option value="">---Select Month---</option>
+                                                @foreach (var month in ViewBag.Months)
+                                                {
+                                                    <option value="@month.Key">@month.Value</option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="RentMonth" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Date" class="control-label"></label>
+                                            <input asp-for="Date" type="datetime" value="@DateTime.Now" readonly class="form-control" />
+                                            <span asp-validation-for="Date" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Previous Due</label>
+                                            <input id="previousDue" readonly class="form-control" style="background-color:orange" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="FlatRent" class="control-label"></label>
+                                            <input asp-for="FlatRent" readonly class="form-control" style="background-color:orange" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="ElectricBill" class="control-label"></label>
+                                            <input asp-for="ElectricBill" class="form-control" />
+                                            <span asp-validation-for="ElectricBill" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="GasBill" class="control-label"></label>
+                                            <input asp-for="GasBill" class="form-control" />
+                                            <span asp-validation-for="GasBill" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="WaterBill" class="control-label"></label>
+                                            <input asp-for="WaterBill" class="form-control" />
+                                            <span asp-validation-for="WaterBill" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="TotalBill" class="control-label"></label>
+                                            <input asp-for="TotalBill" readonly class="form-control" style="background-color:orange" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label asp-for="Paid" class="control-label">Cash Receive</label>
+                                            <input asp-for="Paid" class="form-control" />
+                                            <span asp-validation-for="Paid" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Cash Return</label>
+                                            <input id="cashReturn" readonly class="form-control" style="background-color:orangered; color:white;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Remarks" class="control-label"></label>
+                                            <textarea asp-for="Remarks" rows="5" class="form-control"></textarea>
+                                            <span asp-validation-for="Remarks" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" id="btnSubmit" value="Submit" class="btn btn-success pull-right" />
+                                </div>
+                            </fieldset>
+                        </form>
+                        @*<br />
+                        <div>
+                            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                        </div>*@
                     </div>
                 </div>
             </div>
-            <fieldset>
-                <legend class="text-center">Flat Info</legend>
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Meter No.</label>
-                        <input id="meterNo" disabled class="form-control" style="background-color:deepskyblue" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Resident's Name</label>
-                        <input id="residentName" disabled class="form-control" style="background-color:deepskyblue" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Resident's Contact No</label>
-                        <input id="residentContact" disabled class="form-control" style="background-color:deepskyblue" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">Resident's Arrival Date</label>
-                        <input id="arrivalDate" disabled class="form-control" style="background-color:deepskyblue" />
-                    </div>
-                    <div class="form-group col-md-3 hidden">
-                        <label class="control-label">Resident's Opening Balance</label>
-                        <input id="openingBalance" disabled class="form-control" />
-                    </div>
-                </div>
-            </fieldset>
-            <br />
-            <fieldset>
-                <legend class="text-center">Rent Info</legend>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label asp-for="RentMonth" class="control-label"></label>
-                            <select asp-for="RentMonth" class="form-control">
-                                <option value="">---Select Month---</option>
-                                @foreach (var month in ViewBag.Months)
-                                {
-                                    <option value="@month.Key">@month.Value</option>
-                                }
-                            </select>
-                            <span asp-validation-for="RentMonth" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Date" class="control-label"></label>
-                            <input asp-for="Date" type="datetime" value="@DateTime.Now" readonly class="form-control" />
-                            <span asp-validation-for="Date" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Previous Due</label>
-                            <input id="previousDue" readonly class="form-control" style="background-color:orange" />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="FlatRent" class="control-label"></label>
-                            <input asp-for="FlatRent" readonly class="form-control" style="background-color:orange" />                            
-                        </div>                        
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label asp-for="ElectricBill" class="control-label"></label>
-                            <input asp-for="ElectricBill" class="form-control" />
-                            <span asp-validation-for="ElectricBill" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="GasBill" class="control-label"></label>
-                            <input asp-for="GasBill" class="form-control" />
-                            <span asp-validation-for="GasBill" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="WaterBill" class="control-label"></label>
-                            <input asp-for="WaterBill" class="form-control" />
-                            <span asp-validation-for="WaterBill" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="TotalBill" class="control-label"></label>
-                            <input asp-for="TotalBill" readonly class="form-control" style="background-color:orange" />                            
-                        </div>                        
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label asp-for="Paid" class="control-label">Cash Receive</label>
-                            <input asp-for="Paid" class="form-control" />
-                            <span asp-validation-for="Paid" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Cash Return</label>
-                            <input id="cashReturn" readonly class="form-control" style="background-color:orangered; color:white;" />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Remarks" class="control-label"></label>
-                            <textarea asp-for="Remarks" rows="5" class="form-control"></textarea>
-                            <span asp-validation-for="Remarks" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">                    
-                    <input type="submit" id="btnSubmit" value="Submit" class="btn btn-success pull-right" />
-                </div>
-            </fieldset>            
-        </form>
-        <br />
-        <div>
-            <a asp-action="Index" class="btn btn-primary">Back to List</a>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -136,7 +164,7 @@
     <script>
         $(document).ready(function () {
 
-            $("#FlatId").change(function () {               
+            $("#FlatId").change(function () {
                 $("#meterNo").val("");
                 $("#residentName").val("");
                 $("#residentContact").val("");
@@ -158,7 +186,7 @@
                         $("#residentName").val(data.resident.name);
                         $("#residentContact").val(data.resident.contactNo);
                         $("#arrivalDate").val(date.toLocaleDateString());
-                        $("#openingBalance").val(data.resident.openingBalance);                       
+                        $("#openingBalance").val(data.resident.openingBalance);
                         $("#FlatRent").val(data.flat.rent);
                     },
                     error: function () {
@@ -172,12 +200,12 @@
                     async: false,
                     success: function (data) {
                         var openingBalance = parseFloat($("#openingBalance").val());
-                        
+
                         if (data == null) {
-                            $("#previousDue").val(openingBalance);                            
+                            $("#previousDue").val(openingBalance);
                         }
                         else {
-                            $("#previousDue").val(data.totalBill - data.paid);                          
+                            $("#previousDue").val(data.totalBill - data.paid);
                         }
                     },
                     error: function () {
@@ -188,12 +216,12 @@
 
             $("#RentMonth").change(function () {
                 $("#btnSubmit").prop("disabled", false);
-                
+
                 var id = $("#FlatId").val();
                 var strArrivalDate = $("#arrivalDate").val();
                 var rentMonth = $("#RentMonth").val();
                 var strRentDate = new Date(rentMonth).toLocaleDateString();
-                
+
                 if (strArrivalDate != "") {
                     if (strRentDate != "Invalid Date") {
                         var arrivalDate = new Date(strArrivalDate);
@@ -213,7 +241,7 @@
                                     if (data == true) {
                                         alert("The rent of this month is already paid.");
                                         $("#btnSubmit").prop("disabled", true);
-                                    }                                    
+                                    }
                                 },
                                 error: function () {
                                     alert("Error");
@@ -221,7 +249,7 @@
                             });
                         }
                     }
-                }                                
+                }
             });
 
             $("#ElectricBill").keyup(function () {

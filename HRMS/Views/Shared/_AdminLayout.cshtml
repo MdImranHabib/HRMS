@@ -116,7 +116,7 @@
                         </div>
                         <!-- END SIDEBAR TOGGLER BUTTON -->
                     </li>
-                    <br />                   
+                    <br />
                     <li>
                         <a asp-action="Dashboard" asp-controller="Home">
                             <i class="icon-home"></i>
@@ -141,6 +141,27 @@
                                 <a asp-action="Create" asp-controller="Flats">
                                     <i class="icon-plus"></i>
                                     Add New Flat
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="icon-users"></i>
+                            <span class="title">Residents</span>
+                            <span class="arrow "></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a asp-action="Index" asp-controller="Residents">
+                                    <i class="icon-list"></i>
+                                    Resident List
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-action="Create" asp-controller="Residents">
+                                    <i class="icon-plus"></i>
+                                    Add New Resident
                                 </a>
                             </li>
                         </ul>

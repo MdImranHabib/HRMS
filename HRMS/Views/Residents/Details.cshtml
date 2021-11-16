@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Resident Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     var photoPath = "";
 
@@ -16,61 +17,90 @@
     }
 }
 
-<h2>Resident Details</h2>
-<hr />
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ContactNo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ContactNo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NIDNo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NIDNo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotoPath)
-        </dt>
-        <dd>
-            <img src="@photoPath" alt="Image Not Found" asp-append-version="true" style="height: 100px; width: 100px;"  />
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Occupation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Occupation)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrevAddress)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrevAddress)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OpeningBalance)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OpeningBalance)
-        </dd>
-    </dl>
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">
+        Resident Details <small class="text-lowercase">Resident Details</small>
+    </h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a asp-action="Index" asp-controller="Residents">Resident List</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a asp-action="Details" asp-controller="Residents" asp-route-id="@Model.Id">Resident Details</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <div>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ContactNo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ContactNo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.NIDNo)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.NIDNo)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PhotoPath)
+                        </dt>
+                        <dd>
+                            <img src="@photoPath" alt="Image Not Found" asp-append-version="true" style="height: 100px; width: 100px;" />
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Occupation)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Occupation)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.PrevAddress)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.PrevAddress)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.OpeningBalance)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.OpeningBalance)
+                        </dd>
+                    </dl>
+                </div>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-</div>
+

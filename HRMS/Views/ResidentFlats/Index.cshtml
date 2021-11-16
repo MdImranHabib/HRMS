@@ -2,52 +2,77 @@
 
 @{
     ViewData["Title"] = "Flat Assign Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Flat Assign List</h2>
+<div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">
+        Flat Assign List  <small class="text-lowercase">Flat Assign List</small>
+    </h3>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Assign Flat</a>
-</p>
-<table class="table table-hover table-responsive">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Resident)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Flat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArrivalDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DepartureDate)
-            </th>         
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Resident.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Flat.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArrivalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartureDate)
-            </td>            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Remove</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <a asp-action="Index" asp-controller="ResidentFlats">Flat Assign List</a>
+            </li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="portlet light">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Resident)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Flat)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ArrivalDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DepartureDate)
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Resident.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Flat.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArrivalDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DepartureDate)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Remove</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -75,10 +75,12 @@
                                     @item.Date.ToString("dd-MMM-yyyy")
                                 </td>
                                 <td>
-                                    @*<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-xs btn-warning">Edit</a>*@
-                                    <a asp-action="Receipt" asp-route-id="@item.Id" class="btn btn-xs btn-success" target="_blank">Receipt</a>
+                                    <button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#paymentModal">
+                                        <i class="fa fa-credit-card"></i> Receive Payment
+                                    </button>
                                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-xs btn-info">Details</a>
                                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-xs btn-danger">Delete</a>
+                                    <a asp-action="Receipt" asp-route-id="@item.Id" class="btn btn-xs btn-warning" target="_blank">Receipt</a>
                                 </td>
                             </tr>
                         }
@@ -89,3 +91,50 @@
     </div>
 </div>
 
+<div class="modal fade" id="paymentModal" role="dialog" style="display: none;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header alert bg-primary text-center">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title bold">Receive Rent Payment</h4>
+            </div>
+            <div class="modal-body">
+                <span class="text-center text-danger"></span>
+                <br>
+                <form method="post" action="/Payments/AddCustomer">                    
+                    @*<div class="form-group">
+                        <label class="control-label"></label>
+                        <select asp-for="RentId" class="form-control" asp-items="ViewBag.RentId"></select>
+                        <select name="RentId" class="form-control">
+                            <option value="">--Select--</option>
+                            @foreach (var item in ViewBag.Rents)
+                            {
+                                <option value="@item.Id">@item.Flat.Name - @item.RentMonth</option>
+                            }
+                        </select>
+                    </div>*@
+                    <div class="form-group">
+                        <label class="control-label">Amount</label>
+                        <input type="text" name="Amount" class="form-control" required />                       
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Payment Date</label>
+                        <input type="date" name="PaymentDate" class="form-control" />                        
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Payment Method</label>
+                        <select name="Method" class="form-control">
+                            <option value="">--Select--</option>
+                            <option value="Cash">Cash</option>
+                            <option value="BKash">BKash</option>
+                        </select>                        
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

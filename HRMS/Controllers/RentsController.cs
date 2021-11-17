@@ -72,7 +72,7 @@ namespace HRMS.Controllers
             return View(rent);
         }
 
-        #region Rent Receive
+        #region Generate Rent
 
         public IActionResult Create()
         {                                    

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace HRMS.Models
@@ -48,5 +49,6 @@ namespace HRMS.Models
         public string Remarks { get; set; }
 
         public virtual Flat Flat { get; set; }
+        public virtual List<Payment> Payments { get; set; }
     }
 }

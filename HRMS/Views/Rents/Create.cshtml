@@ -125,18 +125,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
+                                        <div class="form-group hidden">
                                             <label asp-for="Paid" class="control-label">Cash Receive</label>
-                                            <input asp-for="Paid" class="form-control" />
+                                            <input asp-for="Paid" class="form-control" value="0" />
                                             <span asp-validation-for="Paid" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             <label class="control-label">Cash Return</label>
                                             <input id="cashReturn" readonly class="form-control" style="background-color:orangered; color:white;" />
-                                        </div>
+                                        </div>*@
                                         <div class="form-group">
                                             <label asp-for="Remarks" class="control-label"></label>
-                                            <textarea asp-for="Remarks" rows="5" class="form-control"></textarea>
+                                            <textarea asp-for="Remarks" rows="12" class="form-control"></textarea>
                                             <span asp-validation-for="Remarks" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -264,16 +264,16 @@
                 GetTotalBill();
             });
 
-            $("#Paid").keyup(function () {
-                var totalBill = parseFloat(($("#TotalBill").val() == "") ? 0 : $("#TotalBill").val());
-                var cashReceive = parseFloat(($("#Paid").val() == "") ? 0 : $("#Paid").val());
-                var cashReturn = 0;
+            //$("#Paid").keyup(function () {
+            //    var totalBill = parseFloat(($("#TotalBill").val() == "") ? 0 : $("#TotalBill").val());
+            //    var cashReceive = parseFloat(($("#Paid").val() == "") ? 0 : $("#Paid").val());
+            //    var cashReturn = 0;
 
-                if (cashReceive > totalBill) {
-                    cashReturn = cashReceive - totalBill;
-                }
-                $("#cashReturn").val(cashReturn);
-            });
+            //    if (cashReceive > totalBill) {
+            //        cashReturn = cashReceive - totalBill;
+            //    }
+            //    $("#cashReturn").val(cashReturn);
+            //});
 
             function GetTotalBill() {
                 var previousDue = parseFloat(($("#previousDue").val() === "") ? 0 : $("#previousDue").val());

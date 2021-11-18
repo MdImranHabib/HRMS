@@ -27,26 +27,10 @@
                     <i class="fa fa-building"></i>
                 </div>
                 <div class="details">
-                    <div class="number">1</div>
-                    <div class="desc">Total Employee</div>
+                    <div class="number">@ViewBag.TotalFlats</div>
+                    <div class="desc">Total Flats</div>
                 </div>
-                <a class="more" href="/Employees/Index">
-                    View More
-                    <i class="m-icon-swapright m-icon-white"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="dashboard-stat red-intense">
-                <div class="visual">
-                    <i class="fa fa-users"></i>
-                </div>
-                <div class="details">
-                    <div class="number">27</div>
-                    <div class="desc">Total Supplier</div>
-                </div>
-                <a class="more" href="/Suppliers/Index">
+                <a class="more" href="/Flats/Index">
                     View More
                     <i class="m-icon-swapright m-icon-white"></i>
                 </a>
@@ -56,13 +40,29 @@
         <div class="col-md-3">
             <div class="dashboard-stat green-haze">
                 <div class="visual">
-                    <i class="fa fa-comments"></i>
+                    <i class="fa fa-building"></i>
                 </div>
                 <div class="details">
-                    <div class="number">260130.48 Tk.</div>
-                    <div class="desc">Today's Purchase Amount</div>
+                    <div class="number">@(ViewBag.TotalFlats - ViewBag.AllocatedFlats)</div>
+                    <div class="desc">Free Flats</div>
                 </div>
-                <a class="more" href="/Purchases/Index">
+                <a class="more" href="/Flats/Index">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-stat red-intense">
+                <div class="visual">
+                    <i class="fa fa-building"></i>
+                </div>
+                <div class="details">
+                    <div class="number">@ViewBag.AllocatedFlats</div>
+                    <div class="desc">Allocated Flats</div>
+                </div>
+                <a class="more" href="/Flats/Index">
                     View More
                     <i class="m-icon-swapright m-icon-white"></i>
                 </a>
@@ -72,13 +72,13 @@
         <div class="col-md-3">
             <div class="dashboard-stat purple-plum">
                 <div class="visual">
-                    <i class="fa fa-comments"></i>
+                    <i class="fa fa-users"></i>
                 </div>
                 <div class="details">
-                    <div class="number">390732 Tk.</div>
-                    <div class="desc">Today's Sell Amount</div>
+                    <div class="number">@ViewBag.TotalResidents</div>
+                    <div class="desc">Total Residents</div>
                 </div>
-                <a class="more" href="/Sells/Index">
+                <a class="more" href="/Residents/Index">
                     View More
                     <i class="m-icon-swapright m-icon-white"></i>
                 </a>

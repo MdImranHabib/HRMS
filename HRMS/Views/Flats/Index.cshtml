@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Flat Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var sl = 1;
 }
 
 <div class="page-content">
@@ -31,6 +33,7 @@
                 <table class="table table-hover table-responsive" id="dataTable">
                     <thead>
                         <tr class="bg-primary">
+                            <th>#</th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Name)
                             </th>
@@ -53,6 +56,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>@sl</td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
@@ -89,6 +93,7 @@
                                     </a>
                                 </td>
                             </tr>
+                            sl++;
                         }
                     </tbody>
                 </table>

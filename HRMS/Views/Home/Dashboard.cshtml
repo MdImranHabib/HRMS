@@ -6,27 +6,97 @@
 
 <div class="page-content">
     <!-- BEGIN PAGE HEADER-->
-    <h3 class="page-title">
-        Dashboard <small class="text-lowercase">Dashboard</small>
+    <h3 class="page-title bold" id="clock">
+        @*Dashboard <small class="text-lowercase"></small>*@
     </h3>
-    <div class="page-bar">
-        <ul class="page-breadcrumb">
-            <li>
-                <i class="fa fa-home"></i>
-                <a asp-action="Dashboard" asp-controller="Home">Home</a>
-                <i class="fa fa-angle-right"></i>
-            </li>            
-        </ul>
-    </div>
+    @*<div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a asp-action="Dashboard" asp-controller="Home">Home</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+            </ul>
+        </div>*@
     <!-- END PAGE HEADER-->
     <!-- BEGIN PAGE CONTENT-->
     <div class="row">
-        <div class="col-md-12">
-            <div class="portlet light">
-                    
+        <div class="col-md-3">
+            <div class="dashboard-stat blue-madison">
+                <div class="visual">
+                    <i class="fa fa-building"></i>
+                </div>
+                <div class="details">
+                    <div class="number">1</div>
+                    <div class="desc">Total Employee</div>
+                </div>
+                <a class="more" href="/Employees/Index">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-stat red-intense">
+                <div class="visual">
+                    <i class="fa fa-users"></i>
+                </div>
+                <div class="details">
+                    <div class="number">27</div>
+                    <div class="desc">Total Supplier</div>
+                </div>
+                <a class="more" href="/Suppliers/Index">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-stat green-haze">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number">260130.48 Tk.</div>
+                    <div class="desc">Today's Purchase Amount</div>
+                </div>
+                <a class="more" href="/Purchases/Index">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-stat purple-plum">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number">390732 Tk.</div>
+                    <div class="desc">Today's Sell Amount</div>
+                </div>
+                <a class="more" href="/Sells/Index">
+                    View More
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
             </div>
         </div>
     </div>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
+    <script>
+        var myVar = setInterval(myTimer, 1000);
+
+        function myTimer() {
+            var d = new Date();
+            var t = d.toLocaleString();
+            document.getElementById("clock").innerHTML = t;
+        }
+    </script>
+}

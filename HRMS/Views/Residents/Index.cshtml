@@ -10,7 +10,7 @@
     <h3 class="page-title">
         Resident List  <small class="text-lowercase">Resident List</small>
     </h3>
-    <div class="page-bar">
+    <div class="page-bar" style="border:1px solid orange">
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
@@ -26,10 +26,10 @@
     <!-- BEGIN PAGE CONTENT-->
     <div class="row">
         <div class="col-md-12">
-            <div class="portlet light">
-                <table class="table table-hover table-responsive">
+            <div class="portlet light" style="border:1px solid green">
+                <table class="table table-hover table-responsive" id="dataTable">
                     <thead>
-                        <tr>
+                        <tr class="bg-primary">
                             <th>
                                 @Html.DisplayNameFor(model => model.Name)
                             </th>
@@ -80,3 +80,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}

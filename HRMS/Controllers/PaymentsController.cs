@@ -18,15 +18,13 @@ namespace HRMS.Controllers
         {
             _context = context;
         }
-
-        // GET: Payments
+     
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Payments.Include(p => p.Rent);
             return View(await applicationDbContext.ToListAsync());
         }
-
-        // GET: Payments/Details/5
+     
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,8 +42,7 @@ namespace HRMS.Controllers
 
             return View(payment);
         }
-
-        // GET: Payments/Create
+      
         public IActionResult Create()
         {
             var rents = _context.Rents
@@ -56,10 +53,7 @@ namespace HRMS.Controllers
             ViewData["RentId"] = new SelectList(_context.Rents, "Id", "RentMonth");
             return View();
         }
-
-        // POST: Payments/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RentId,Amount,PaymentDate,Method")] Payment payment)
@@ -83,7 +77,6 @@ namespace HRMS.Controllers
             return View(payment);
         }
 
-        // GET: Payments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,9 +93,6 @@ namespace HRMS.Controllers
             return View(payment);
         }
 
-        // POST: Payments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,RentId,Amount,PaymentDate,Method")] Payment payment)
@@ -135,8 +125,7 @@ namespace HRMS.Controllers
             ViewData["RentId"] = new SelectList(_context.Rents, "Id", "RentMonth", payment.RentId);
             return View(payment);
         }
-
-        // GET: Payments/Delete/5
+ 
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,8 +143,7 @@ namespace HRMS.Controllers
 
             return View(payment);
         }
-
-        // POST: Payments/Delete/5
+   
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -169,6 +157,30 @@ namespace HRMS.Controllers
         private bool PaymentExists(int id)
         {
             return _context.Payments.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> ReceivePayment(int rentId, double amount, string method)
+        {
+            Payment payment = new Payment()
+            {
+                RentId = rentId,
+                Amount = amount,
+                PaymentDate = DateTime.Now,
+                Method = method
+            };
+
+            var rent = await _context.Rents.FirstOrDefaultAsync(r => r.Id == rentId);
+            rent.Paid = rent.Paid + amount;
+
+            _context.Add(payment);
+            _context.Update(rent);
+            await _context.SaveChangesAsync();
+
+            var returnData = new
+            {
+                redirectUrl = Url.Action("Index", "Rents")
+            };
+            return Json(returnData);
         }
     }
 }

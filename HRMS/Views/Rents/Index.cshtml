@@ -10,7 +10,7 @@
     <h3 class="page-title">
         Rent List  <small class="text-lowercase">Rent List</small>
     </h3>
-    <div class="page-bar">
+    <div class="page-bar" style="border:1px solid orange">
         <ul class="page-breadcrumb">
             <li>
                 <i class="fa fa-home"></i>
@@ -18,7 +18,6 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-
                 <a asp-action="Index" asp-controller="Rents">Rent List</a>
             </li>
         </ul>
@@ -27,10 +26,10 @@
     <!-- BEGIN PAGE CONTENT-->
     <div class="row">
         <div class="col-md-12">
-            <div class="portlet light">
+            <div class="portlet light" style="border:1px solid green">
                 <table class="table table-hover table-responsive" id="rentListTable">
                     <thead>
-                        <tr>
+                        <tr class="bg-primary">
                             <th>
                                 @Html.DisplayNameFor(model => model.Flat)
                             </th>
@@ -75,9 +74,6 @@
                                     @item.Date.ToString("dd-MMM-yyyy")
                                 </td>
                                 <td>
-                                    @*<button class="btn btn-xs btn-success" type="button" data-toggle="modal" data-target="#paymentModal">
-            <i class="fa fa-credit-card"></i> Receive Payment
-        </button>*@
                                     <button type="button" data-id="@item.Id" class="btn btn-xs btn-success pReceive">
                                         <i class="fa fa-credit-card"></i> Receive Payment
                                     </button>
@@ -94,61 +90,16 @@
     </div>
 </div>
 
-<div class="modal fade" id="paymentModal" role="dialog" style="display: none;">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header alert bg-primary text-center">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title bold">Receive Rent Payment</h4>
-            </div>
-            <div class="modal-body">
-                <span class="text-center text-danger"></span>
-                <br>
-                <form method="post" action="/Payments/AddCustomer">
-                    @*<div class="form-group">
-                            <label class="control-label"></label>
-                            <select asp-for="RentId" class="form-control" asp-items="ViewBag.RentId"></select>
-                            <select name="RentId" class="form-control">
-                                <option value="">--Select--</option>
-                                @foreach (var item in ViewBag.Rents)
-                                {
-                                    <option value="@item.Id">@item.Flat.Name - @item.RentMonth</option>
-                                }
-                            </select>
-                        </div>*@
-                    <div class="form-group">
-                        <label class="control-label">Amount</label>
-                        <input type="text" name="Amount" class="form-control" required />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Payment Date</label>
-                        <input type="date" name="PaymentDate" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Payment Method</label>
-                        <select name="Method" class="form-control">
-                            <option value="">--Select--</option>
-                            <option value="Cash">Cash</option>
-                            <option value="BKash">BKash</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
+    <script>       
         $(document).ready(function () {
-            $("#rentListTable").on('click', '.pReceive', function () {
+            $('#rentListTable').DataTable();
+
+            $("#rentListTable").on('click', '.pReceive', function () {                
+                var rentId = $(this).data('id');
 
                 $.confirm({
                     title: 'Receive Rent Payment',
@@ -168,38 +119,46 @@
                         '</div>' +
                         '</form>',
                     buttons: {
-                    formSubmit: {
-                        text: 'Ok',
-                        btnClass: 'btn-blue',
-                        keys: ['enter', 'shift'],
-                        action: function () {
-                            var rentId = $(this).data('id');
-                            var amount = this.$content.find('.amount').val();
-                            var method = this.$content.find('.method').val();
-                            if (!amount) {
-                                $.alert('provide a amount');
-                                return false;
-                            }
-
-                            $.ajax({
-                                type: 'GET',
-                                url: '/Payments/ReceivePayment/',
-                                dataType: 'json',
-                                data: { invoice: name, counterName: counterName },
-                                success: function (data) {
-                                    window.open('/PointOfSale/ShowReport?invoiceNo=' + name, '_blank');
-                                    return true;
-                                }, error: function () {
-                                    $.alert('Invalid Invoice Number');
+                        formSubmit: {
+                            text: 'Ok',
+                            btnClass: 'btn-blue',
+                            keys: ['enter', 'shift'],
+                            action: function () {                             
+                                var amount = this.$content.find('.amount').val();
+                                var method = this.$content.find('.method').val();
+                               
+                                if (!amount) {
+                                    $.alert('provide a amount');
                                     return false;
                                 }
-                            });
+
+                                if (!method) {
+                                    $.alert('select a payment method');
+                                    return false;
+                                }
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Payments/ReceivePayment/',
+                                    dataType: 'json',
+                                    data: { rentId: rentId, amount: amount, method: method },
+                                    success: function (data) {
+                                        window.setTimeout(function () {
+                                            window.location = data.redirectUrl;
+                                        }, 1000);
+
+                                        toastr.success("Payment Received Successfully.");
+                                    }, error: function () {
+                                        toastr.error('Something went wrong!');
+                                        return false;
+                                    }
+                                });
+                            }
+                        },
+                        cancel: function () {
+                            //close
                         }
                     },
-                    cancel: function () {
-                        //close
-                    }
-                },
                     onContentReady: function () {
                         var jc = this;
                         this.$content.find('form').on('submit', function (e) {
@@ -208,8 +167,8 @@
                         });
                     }
                 });
-        });
             });
+        });
 
     </script>
 }
